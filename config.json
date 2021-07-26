@@ -1,0 +1,17 @@
+{
+  "MAINDATA": {
+    "CHROMELOCALAPPPATH": "",
+    "ITEMLINK": "https://www.amazon.com/ZOTAC-Graphics-IceStorm-Advanced-ZT-A30610H-10MLHR/dp/B097YW4FW9/ref=sr_1_6?dchild=1&keywords=rtx+3060+ti&qid=1626127266&sr=8-6",
+    "LESSTHANPRICE": "750",
+    "LOGINEMAIL": "",
+    "LOGINPASSWORD": ""
+  },
+
+  "TWILIODATA": {
+    "ACCOUNT_SID": "",
+    "ACCOUNT_AUTH_TOKEN": "",
+    "YOURPHONENUMBER" : "",
+    "TWILIOGIVENPHONENUMBER": ""
+  }
+}
+
