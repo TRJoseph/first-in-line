@@ -80,8 +80,8 @@ while not buyingOptions:
                 placeOrder = False
                 placeAttempt = 0
                 while not placeOrder:
+                    placeAttempt += 1
                     try:
-                        placeAttempt += 1
                         placeOrderButton = addButton = browser.find_element_by_class_name('place-your-order-button')
                         placeOrderButton.click()
 
@@ -95,7 +95,7 @@ while not buyingOptions:
                     except:
                         loginInfo = True
                         time.sleep(random.randrange(1, 3))
-                        if placeAttempt == 2: # After second buy attempt on placeOrder screen, restarts item check
+                        if placeAttempt == 2: # After second buy attempt on placeOrder screen, restarts item check (handles bot being late to getting item if out of stock)
                             placeOrder = True
                             browser.close()
                             browser.get(link)
