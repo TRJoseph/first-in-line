@@ -97,6 +97,7 @@ while not buyingOptions:
                         time.sleep(random.randrange(1, 3))
                         if placeAttempt == 2: # After second buy attempt on placeOrder screen, restarts item check
                             placeOrder = True
+                            browser.close()
                             browser.get(link)
 
         else:
