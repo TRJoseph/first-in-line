@@ -12,7 +12,6 @@ with open('config.json', 'r') as info:
     settings = json.load(info)
     link = settings['MAINDATA']["ITEMLINK"]
     lessThanPrice = int(settings["MAINDATA"]["LESSTHANPRICE"])
-    ChromePath = settings["MAINDATA"]["CHROMELOCALAPPPATH"]
     emailLogin = settings["MAINDATA"]["LOGINEMAIL"]
     passwordLogin = settings["MAINDATA"]["LOGINPASSWORD"]
     TwilioSID = settings["TWILIODATA"]["ACCOUNT_SID"]
@@ -22,7 +21,7 @@ with open('config.json', 'r') as info:
 
 
 client = Client(TwilioSID, TwilioAUTH) # sets info for twilio API functionality (check config file to edit)
-browser = webdriver.Chrome(ChromePath) # sets chromedriver application path (check config file to edit)
+browser = webdriver.Chrome(ChromeDriverManager.install()) # sets chromedriver application path (check config file to edit)
 
 browser.get(link)
 productname = browser.find_element_by_xpath("//*[@id='productTitle']").text # finds name of product item for twilio to forward to user's notifications
