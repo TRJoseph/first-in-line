@@ -6,6 +6,7 @@ import sys
 import selenium.common.exceptions as selexcept
 from twilio.rest import Client
 import random
+from webdriver_manager.chrome import ChromeDriverManager
 
 # Imports config file and assigns to variables
 with open('config.json', 'r') as info:
@@ -35,13 +36,13 @@ while not buyingOptions:
         price = price.replace("$", "")
         price = price.replace(",", "")
         price = int(price[:-3])
-        print("Gathering lowest price...")
+        print(time.strftime('[%H:%M:%S] ') + "Gathering lowest price...")
         print(price)
         buyingOptions = True
 
         if price < lessThanPrice:  # if card price is optimal, clicks buy now (set this to preferred purchase condition in config file)
             buyNow = addButton = browser.find_element_by_id("buy-now-button")
-            print("Buying now...")
+            print(time.strftime('[%H:%M:%S] ') + "Buying now...")
             buyNow.click()
 
             loginInfo = False
@@ -51,7 +52,7 @@ while not buyingOptions:
                     email = browser.find_element_by_id("ap_email")  # inputs email and clicks next
                     email.click()
                     email.clear()
-                    print("Inputting Email...")
+                    print(time.strftime('[%H:%M:%S] ') + "Inputting Email...")
                     email.send_keys(emailLogin)
                     email.send_keys(Keys.RETURN)
                     continueButton = addButton = browser.find_element_by_id("continue")
@@ -65,7 +66,7 @@ while not buyingOptions:
                     password = browser.find_element_by_id("ap_password")  # inputs password and signs in
                     password.clear()
                     password.send_keys(passwordLogin)
-                    print("Inputting Password...")
+                    print(time.strftime('[%H:%M:%S] ') + "Inputting Password...")
                     password.send_keys(Keys.ENTER)
                     signInButton = addButton = browser.find_element_by_id('signInSubmit')
                     signInButton.click()
@@ -78,6 +79,7 @@ while not buyingOptions:
 
                 placeOrder = False
                 placeAttempt = 0
+                print(time.strftime('[%H:%M:%S] ') + "Attempting to place order...")
                 while not placeOrder:
                     placeAttempt += 1
                     try:
@@ -94,10 +96,13 @@ while not buyingOptions:
                     except:
                         loginInfo = True
                         time.sleep(random.randrange(1, 3))
-                        if placeAttempt == 2: # After second buy attempt on placeOrder screen, restarts item check (handles bot being late to getting item if out of stock)
+                        if placeAttempt == 2: # After second buy attempt on placeOrder screen, restarts item check
                             placeOrder = True
-                            browser.close()
-                            browser.get(link)
+                            buyingOptions = False
+                            print(time.strftime('[%H:%M:%S] ') + "Place Order button unavailable, item out of stock.")
+                            print(time.strftime('[%H:%M:%S] ') + "Returning to product page to try again...")
+                            browser.get(link) # returns to product page
+                            time.sleep(1)
 
         else:
             buyingOptions = False
@@ -106,7 +111,7 @@ while not buyingOptions:
 
     except selexcept.NoSuchElementException: # handles button missing; website format changes depending on item availability
         buyingOptions = False
-        print("Button is not ready yet")
+        print(time.strftime('[%H:%M:%S] ') + "Button is not ready yet")
         browser.refresh()
         time.sleep(random.randrange(2, 11))
 browser.close()
