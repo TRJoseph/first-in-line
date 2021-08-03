@@ -22,7 +22,7 @@ with open('config.json', 'r') as info:
 
 
 client = Client(TwilioSID, TwilioAUTH) # sets info for twilio API functionality (check config file to edit)
-browser = webdriver.Chrome(ChromeDriverManager.install()) # sets chromedriver application path (check config file to edit)
+browser = webdriver.Chrome(ChromeDriverManager.install())
 
 browser.get(link)
 productname = browser.find_element_by_xpath("//*[@id='productTitle']").text # finds name of product item for twilio to forward to user's notifications
